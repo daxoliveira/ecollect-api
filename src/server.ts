@@ -14,16 +14,37 @@ const app = express();
 // GET http://localhost:3333/users = List users
 // GET http://localhost:3333/users/5 = Request user's data with Id 5
 
+// Request Params: placed after the resource to identify a specific part of it
+
+const users = [
+  'Facebook',
+  'Amazon',
+  'Apple',
+  'Netflix',
+  'Google'
+]
+
 app.get('/users', (request, response) => {
   console.log('Listing users')
 
-  response.json([
-    'Facebook',
-    'Amazon',
-    'Apple',
-    'Netflix',
-    'Google'
-  ])
+  return response.json(users)
+})
+
+app.get('/users/:id', (request, response) => {
+  const id = Number(request.params.id);
+
+  const user = users[id]
+
+  return response.json(user)
+})
+
+app.post('/users', (request, response) => {
+  const user = {
+    name: 'Dax',
+    email: 'dax.oliveira.br@gmail.com'
+  }
+
+  return response.json(user)
 })
 
 app.listen(3333);
