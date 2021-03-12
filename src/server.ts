@@ -2,6 +2,8 @@ import express from 'express';
 
 const app = express();
 
+app.use(express.json());
+
 // Route: the entire URL of your request
 // Resource: Which entity of your application will be accessed
 
@@ -16,6 +18,8 @@ const app = express();
 
 // Request Params: placed after the resource to identify a specific part of it
 // Query Params: also placed after the resource used for filtering, pagination
+// Request Body: information sent in the body of the request in order to create
+// and/or update existing data
 
 const users = [
   'Facebook',
@@ -42,9 +46,11 @@ app.get('/users/:id', (request, response) => {
 })
 
 app.post('/users', (request, response) => {
+  const data = request.body;
+
   const user = {
-    name: 'Dax',
-    email: 'dax.oliveira.br@gmail.com'
+    name: data.name,
+    email: data.email
   }
 
   return response.json(user)
