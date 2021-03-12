@@ -15,6 +15,7 @@ const app = express();
 // GET http://localhost:3333/users/5 = Request user's data with Id 5
 
 // Request Params: placed after the resource to identify a specific part of it
+// Query Params: also placed after the resource used for filtering, pagination
 
 const users = [
   'Facebook',
@@ -25,9 +26,11 @@ const users = [
 ]
 
 app.get('/users', (request, response) => {
-  console.log('Listing users')
+  const search = String(request.query.search) 
 
-  return response.json(users)
+  const filteredUsers = search ? users.filter(user => user.includes(search)) : users
+
+  return response.json(filteredUsers)
 })
 
 app.get('/users/:id', (request, response) => {
